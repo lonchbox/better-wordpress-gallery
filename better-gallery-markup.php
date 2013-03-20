@@ -61,14 +61,14 @@ class MM_Better_Gallery {
   		}
 
   		extract(shortcode_atts(array(
-    		'order'      => 'ASC',
-    		'orderby'    => 'menu_order ID',
+    		'order'      => '',
+    		'orderby'    => '',
     		'id'         => $post->ID,
-    		'itemtag'    => 'figure',
+    		'itemtag'    => 'li',
     		'icontag'    => '',
-    		'captiontag' => 'figcaption',
+    		'captiontag' => '',
     		'columns'    => 3,
-    		'size'       => 'thumbnail',
+    		'size'       => 'gallery-thumb',
     		'include'    => '',
     		'exclude'    => ''
   		), $attr));
@@ -117,7 +117,7 @@ class MM_Better_Gallery {
 
   		$gallery_style = $gallery_div = '';
 
-  		$gallery_div = "<section id='$selector' class='gallery gal-col-{$columns} clearfix'>";
+  		$gallery_div = "<ul id='$selector' class='block-grid three-up' data-clearing>";
   		$output = apply_filters( 'gallery_style', $gallery_style . "\n\t\t" . $gallery_div );
 
   		$i = 0;
@@ -126,21 +126,23 @@ class MM_Better_Gallery {
     		$link = str_replace( '<a href', '<a rel="'. $selector .'" href', $link );
 
     		$output .= "
-    		<{$itemtag} class='gallery-item'>";
+    		<{$itemtag}>";
     		$output .= "
         		$link
       		";
-    		if ( $captiontag && trim($attachment->post_excerpt) ) {
+    		/*
+if ( $captiontag && trim($attachment->post_excerpt) ) {
       			$output .= "
         			<{$captiontag} class='wp-caption-text gallery-caption'>
         			" . wptexturize($attachment->post_excerpt) . "
         			</{$captiontag}>";
     		}
+*/
     		$output .= "</{$itemtag}>";
   		}
 
   		$output .= "
-    		</section>\n";
+    		</ul>\n";
 
   		return $output;
 	}
@@ -171,11 +173,13 @@ class MM_Better_Gallery {
 	}
 
 	/************* Basic CSS *****************/ 
-	public function mm_gallery_custom_css() {
+	/*
+public function mm_gallery_custom_css() {
 		wp_register_style( 'better-gallery-style', $this->plugin_url . 'assets/css/better-gallery.css', array(), '2013-2-04T15:38', 'all' );
         wp_enqueue_style( 'better-gallery-style' );
 
     }
+*/
 }
 
 $mm = new MM_Better_Gallery;
